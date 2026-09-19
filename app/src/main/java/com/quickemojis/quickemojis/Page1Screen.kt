@@ -36,6 +36,8 @@ fun Page1Screen() {
     var toastEmoji by remember { mutableStateOf("") }
     var showToast by remember { mutableStateOf(false) }
 
+    var lastScrubIndex by remember { mutableStateOf(-1) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -50,13 +52,16 @@ fun Page1Screen() {
                 .fillMaxHeight()
                 .weight(1f)
                 .pointerInput(Unit) {
-                    detectDragGestures { change, _ ->
+                    detectVerticalDragGestures { change, _ ->
                         val y = change.position.y
                         val height = size.height
                         val percentage = (y / height).coerceIn(0f, 1f)
                         val index = (percentage * (emojis.size - 1)).toInt()
-                        coroutineScope.launch {
-                            gridState.scrollToItem(index)
+                        if (index != lastScrubIndex) {
+                            lastScrubIndex = index
+                            coroutineScope.launch {
+                                gridState.scrollToItem(index)
+                            }
                         }
                     }
                 }
@@ -67,7 +72,7 @@ fun Page1Screen() {
                 modifier = Modifier
                     .fillMaxHeight()
                     .widthIn(max = 360.dp)
-                    .padding(vertical = 40.dp)
+                    .padding(vertical = 80.dp, horizontal = 24.dp)
                     .background(Color.White, RoundedCornerShape(24.dp))
                     .padding(10.dp)
                     .padding(top = 10.dp)
