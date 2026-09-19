@@ -17,6 +17,24 @@ android {
             useSupportLibrary = true
         }
     }
+    
+    signingConfigs {
+        create("release") {
+            storeFile = file("../release.keystore")
+            storePassword = "quickemojis2026"
+            keyAlias = "release"
+            keyPassword = "quickemojis2026"
+        }
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
     buildFeatures {
         compose = true
     }
