@@ -1,5 +1,10 @@
 package com.quickemojis.quickemojis
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
+
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -27,6 +32,8 @@ import kotlin.random.Random
 fun Page2Screen() {
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current
+    val context = LocalContext.current
+    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     
     var bgColor by remember { mutableStateOf(randomColor()) }
     var circleColor by remember { mutableStateOf(randomColor()) }
@@ -94,7 +101,12 @@ fun Page2Screen() {
         modifier = Modifier
             .fillMaxSize()
             .background(animatedBg)
-            .clickable { randomize() }
+            .clickable { 
+                emoji?.let { item ->
+                    clipboard.setPrimaryClip(ClipData.newPlainText("emoji", item.emoji))
+                }
+                randomize() 
+            }
     ) {
         emoji?.let { item ->
             Box(
