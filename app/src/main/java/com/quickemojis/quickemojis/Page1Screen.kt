@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -34,6 +35,11 @@ fun Page1Screen() {
     val gridState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
     
+    val isDark = isSystemInDarkTheme()
+    val outerColor = if (isDark) Color.White else Color.Black
+    val innerColor = if (isDark) Color.Black else Color.White
+    val toastBgColor = if (isDark) Color(0xAAFFFFFF) else Color(0xAA000000)
+
     var toastEmoji by remember { mutableStateOf("") }
     var showToast by remember { mutableStateOf(false) }
 
@@ -42,7 +48,7 @@ fun Page1Screen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(outerColor)
             .windowInsetsPadding(WindowInsets.safeDrawing)
     ) {
         Row(
@@ -74,7 +80,7 @@ fun Page1Screen() {
                     .fillMaxHeight()
                     .widthIn(max = 360.dp)
                     .padding(vertical = 80.dp, horizontal = 24.dp)
-                    .background(Color.White, RoundedCornerShape(24.dp))
+                    .background(innerColor, RoundedCornerShape(24.dp))
                     .padding(10.dp)
                     .padding(top = 10.dp)
             ) {
@@ -115,7 +121,7 @@ fun Page1Screen() {
         ) {
             Box(
                 modifier = Modifier
-                    .background(Color(0xAAFFFFFF), RoundedCornerShape(32.dp))
+                    .background(toastBgColor, RoundedCornerShape(32.dp))
                     .padding(40.dp)
             ) {
                 Text(text = toastEmoji, fontSize = 100.sp)

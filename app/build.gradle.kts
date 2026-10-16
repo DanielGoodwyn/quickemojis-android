@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.quickemojis.quickemojis"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.quickemojis.quickemojis"
+        applicationId = "com.quickemojis.app.v1"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 36
+        versionCode = 3
+        versionName = "1.0.2"
         vectorDrawables {
             useSupportLibrary = true
         }
