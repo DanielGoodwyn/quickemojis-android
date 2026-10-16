@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -80,13 +81,13 @@ fun Page1Screen() {
                     .fillMaxHeight()
                     .widthIn(max = 360.dp)
                     .padding(vertical = 80.dp, horizontal = 24.dp)
-                    .background(innerColor, RoundedCornerShape(24.dp))
-                    .padding(10.dp)
-                    .padding(top = 10.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(innerColor)
             ) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(4),
                     state = gridState,
+                    contentPadding = PaddingValues(10.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                     modifier = Modifier.fillMaxSize()
