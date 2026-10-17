@@ -76,7 +76,7 @@ fun Page1Screen() {
             
             Box(modifier = scrubberModifier)
             
-            Box(
+            BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxHeight()
                     .widthIn(max = 360.dp)
@@ -84,6 +84,10 @@ fun Page1Screen() {
                     .clip(RoundedCornerShape(24.dp))
                     .background(innerColor)
             ) {
+                val availableWidth = maxWidth - 20.dp - 30.dp // 10.dp contentPadding * 2 + 10.dp spacing * 3
+                val itemSize = (availableWidth / 4).coerceAtLeast(40.dp)
+                val emojiFontSize = (itemSize.value * 0.75f).sp
+
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(4),
                     state = gridState,
@@ -105,7 +109,7 @@ fun Page1Screen() {
                                     showToast = true
                                 }
                         ) {
-                            Text(text = item.emoji, fontSize = 36.sp)
+                            Text(text = item.emoji, fontSize = emojiFontSize)
                         }
                     }
                 }
